@@ -7,24 +7,30 @@ class UserService {
   HttpService _http;
   UserService(this._http);
 
-  Future<bool> login(String userName, String password) async {
-    final res = await _http.post('/account/login/user', {'UserName': userName, 'Password': password});
-    return true;
+  Future<dynamic> login(String userName, String password) {
+    final data = {
+      "UserName": userName,
+      "Password": password,
+      "IsBaseApp": true,
+      "IsAddInApp": true,
+      "MaxNumberOfTries": 0,
+      "DurationTime": 0,
+      "LockDuration": 0,
+      "FromDomain": "string"
+    };
+    return _http.post('/account/trusted/login', data);
   }
 
-  Future<bool> register(RegisterModel model) async {
-    final res = await _http.post('/account/register', model);
-    return true;
+  Future<dynamic> register(RegisterModel model) async {
+    return await _http.post('/account/register', model);
   }
 
-  Future<bool> forgotPassword(String email) async {
+  Future<dynamic> forgotPassword(String email) async {
     final model = new ForgotPasswordModel();
-    final res = await _http.post('/account/forgotpassword', model);
-    return true;
+    return await _http.post('/account/forgotpassword', model);
   }
 
-  Future<bool> resetPassword(ResetPasswordModel model) async {
-    final res = await _http.post('account/resetpassword', model);
-    return true;
+  Future<dynamic> resetPassword(ResetPasswordModel model) async {
+    return await _http.post('account/resetpassword', model);
   }
 }

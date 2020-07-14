@@ -2,26 +2,35 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'configs_service.dart';
+import 'dialog_service.dart';
 
 class HttpService {
-  final urlBase = '';
+  final urlBase = 'http://rethink.kloon.vn:8920/api/basedata/api/v1';
   ConfigsService _configs;
   HttpService(this._configs);
 
-  dynamic _handler(http.Response res) {
+  Future<dynamic> _handler(http.Response res) {
     if (res.statusCode == 200) {
-      return jsonDecode(res.body);
+      return res.body.length < 1
+          ? new Future.value()
+          : new Future.value(json.decode(res.body.toString()));
     }
     print(res.statusCode);
+    print(res.body);
+    final msg = res.body;
     // switch (res.statusCode) {
     //   default:
+    //     _dialog.alert(res.body);
+    //     break;
     // }
-    return null;
+    return new Future.error(msg);
   }
 
   Map<String, String> get _headers => {
         'Content-Type': 'application/json; charset=utf-8',
         'Accept': 'application/json',
+        'TenantId': '9c9726f7-5d61-4661-9248-1a10aa228c20',
+        'Accept-Language': 'en-US'
         //'Authorization': 'Bearer ${this._configs.token}'
       };
 

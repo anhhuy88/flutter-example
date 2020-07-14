@@ -1,5 +1,7 @@
+import 'package:app_flutter_provider/services/dialog_service.dart';
 import 'package:app_flutter_provider/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final UserService _user;
@@ -13,6 +15,13 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = new GlobalKey<FormState>();
   String _userName;
   String _password;
+  DialogService _dialogService;
+
+  @override
+  void initState() {
+    super.initState();
+    _dialogService = Provider.of<DialogService>(context, listen: false);
+  }
 
   Widget _showLogo() {
     return new Hero(
@@ -71,7 +80,10 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    await widget._user.login(_userName, _password);
+                    widget._user
+                        .login(_userName, _password)
+                        .then((value) => print(value['Tokenkey']))
+                        .catchError((e) => _dialogService.alert(context, e));
                     print('U: $_userName, pwd: $_password');
                   }
                 })));
