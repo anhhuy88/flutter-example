@@ -17,3 +17,11 @@ samples, guidance on mobile development, and a full API reference.
 
 # Flutter by example
 - https://www.flutterbyexample.com/
+
+
+https://www.youtube.com/watch?v=ZcS66NNbTGw&feature=youtu.be
+https://github.com/iampawan/FlutterExampleApps
+https://github.com/iampawan/Flutter-UI-Kit/tree/master/lib
+
+https://viblo.asia/p/bloc-pattern-in-flutter-phan-1-Az45brDq5xY
+https://bloclibrary.dev/#/flutterlogintutorial?id=authentication-states
